@@ -56,7 +56,7 @@ export async function fetchPlayerCount(tournamentId: string): Promise<number> {
 
 export async function registerPlayer(tournamentId: string, pseudo: string, level: number) {
   const { data, error } = await supabase
-    .rpc('register_player', { p_tournament_id: tournamentId, p_pseudo: pseudo, p_level: level })
+    .rpc('sign_up_player', { p_tournament_id: tournamentId, p_pseudo: pseudo, p_level: level })
     .single();
   if (error) throw new Error(error.message);
   return data as { token: string; code: string };

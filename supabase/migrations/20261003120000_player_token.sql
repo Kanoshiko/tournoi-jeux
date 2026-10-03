@@ -10,9 +10,11 @@ alter table public.players
 alter table public.players
   add constraint players_token_unique unique (token);
 
-drop function public.register_player(uuid, text, int);
+-- L'ancienne fonction register_player (qui renvoyait l'id interne) est désactivée
+-- plutôt que supprimée ; sign_up_player la remplace.
+revoke all on function public.register_player(uuid, text, int) from public, anon, authenticated;
 
-create function public.register_player(p_tournament_id uuid, p_pseudo text, p_level int)
+create function public.sign_up_player(p_tournament_id uuid, p_pseudo text, p_level int)
 returns table (token uuid, code text)
 language plpgsql
 security definer
@@ -146,12 +148,12 @@ as $$
     and p.code = btrim(coalesce(p_code, ''));
 $$;
 
-revoke all on function public.register_player(uuid, text, int) from public;
+revoke all on function public.sign_up_player(uuid, text, int) from public;
 revoke all on function public.get_player(uuid) from public;
 revoke all on function public.update_player(uuid, text, int) from public;
 revoke all on function public.delete_player(uuid) from public;
 revoke all on function public.find_player(uuid, text, text) from public;
-grant execute on function public.register_player(uuid, text, int) to anon, authenticated;
+grant execute on function public.sign_up_player(uuid, text, int) to anon, authenticated;
 grant execute on function public.get_player(uuid) to anon, authenticated;
 grant execute on function public.update_player(uuid, text, int) to anon, authenticated;
 grant execute on function public.delete_player(uuid) to anon, authenticated;
