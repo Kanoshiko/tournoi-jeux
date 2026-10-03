@@ -37,6 +37,8 @@ npm test
 
 La page `/diagnostic` vérifie que le site parle bien à la base.
 
+Site en ligne : https://tournoi-jeux.netlify.app (diagnostic : https://tournoi-jeux.netlify.app/diagnostic)
+
 ## Secrets
 
 - **Dans le navigateur** : seulement l'URL du projet et la clé *publishable* Supabase. Elles sont publiques par conception ; la protection des données repose sur les règles RLS de la base.
