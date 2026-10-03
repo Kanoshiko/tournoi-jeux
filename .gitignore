@@ -1,0 +1,11 @@
+node_modules
+dist
+*.tsbuildinfo
+
+# Variables d'environnement locales : jamais versionnées
+.env
+.env.*
+!.env.example
+
+# Netlify CLI
+.netlify
