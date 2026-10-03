@@ -24,9 +24,15 @@ export default function Diagnostic() {
   ]);
 
   useEffect(() => {
-    if (!supabaseConfigured) return;
     const set = (label: string, ok: boolean, detail: string) =>
       setChecks((cs) => cs.map((c) => (c.label === label ? { ...c, ok, detail } : c)));
+
+    if (!supabaseConfigured) {
+      for (const label of ['Appel à la base (ping)', 'Lecture du catalogue de jeux', 'Liste des joueurs protégée']) {
+        set(label, false, 'Non testé : configuration Supabase absente');
+      }
+      return;
+    }
 
     (async () => {
       const { data, error } = await supabase.rpc('ping');
@@ -50,7 +56,8 @@ export default function Diagnostic() {
   }, []);
 
   const allOk = checks.every((c) => c.ok === true);
-  const pending = checks.some((c) => c.ok === null);
+  const failed = checks.some((c) => c.ok === false);
+  const pending = !failed && checks.some((c) => c.ok === null);
 
   return (
     <main className="page">
