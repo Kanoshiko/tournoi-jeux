@@ -1,11 +1,14 @@
 import { useCallback, useEffect, useState, type FormEvent } from 'react';
 import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import Hero from '../../components/Hero';
+import AssignmentView from '../../components/AssignmentView';
 import LevelPicker from '../../components/LevelPicker';
 import {
   deleteMyPlayer,
   fetchGames,
   getMyPlayer,
+  getMyAssignment,
+  type Assignment,
   isToken,
   updateMyPlayer,
   type Game,
@@ -18,7 +21,7 @@ type State =
   | { kind: 'loading' }
   | { kind: 'notfound' }
   | { kind: 'error'; message: string }
-  | { kind: 'ready'; me: MyPlayer; games: Game[] };
+  | { kind: 'ready'; me: MyPlayer; games: Game[]; assignment: Assignment | null };
 
 export default function MonInscription() {
   const { token } = useParams();
@@ -47,8 +50,12 @@ export default function MonInscription() {
         return;
       }
       rememberToken(token);
-      const games = await fetchGames(me.tournament_id);
-      setState({ kind: 'ready', me, games });
+      const published = me.tournament_status === 'publie' || me.tournament_status === 'termine';
+      const [games, assignment] = await Promise.all([
+        fetchGames(me.tournament_id),
+        published ? getMyAssignment(token) : Promise.resolve(null),
+      ]);
+      setState({ kind: 'ready', me, games, assignment });
       setPseudo(me.pseudo);
       setLevel(me.level);
     } catch (e) {
@@ -58,6 +65,9 @@ export default function MonInscription() {
 
   useEffect(() => {
     load();
+    // Les organisateurs peuvent ajuster les tables : on rafraîchit chaque minute.
+    const id = setInterval(load, 60_000);
+    return () => clearInterval(id);
   }, [load]);
 
   if (state.kind === 'loading') {
@@ -88,7 +98,7 @@ export default function MonInscription() {
     );
   }
 
-  const { me, games } = state;
+  const { me, games, assignment } = state;
   const tier = tierOf(me.level);
   const open = me.tournament_status === 'inscriptions';
   const nearby = gamesNearLevel(games, me.level).slice(0, 4);
@@ -166,6 +176,8 @@ export default function MonInscription() {
       </Hero>
 
       <div className="stack">
+        {assignment && <AssignmentView a={assignment} />}
+
         <section className="card stack-sm" aria-labelledby="code-title">
           <h2 id="code-title" className="h-small">Ton animal secret</h2>
           <p className="code">{me.animal}</p>
@@ -177,13 +189,13 @@ export default function MonInscription() {
           </button>
         </section>
 
-        <p className="info">
+        {!assignment && <p className="info">
           {open
             ? 'Les équipes et les tables seront publiées le jour du tournoi.'
             : me.tournament_status === 'brouillon'
               ? 'Les inscriptions sont closes. Les équipes sont en préparation.'
               : 'Les équipes et les tables sont publiées.'}
-        </p>
+        </p>}
 
         {nearby.length > 0 && (
           <section className="stack-sm" aria-labelledby="games-title">

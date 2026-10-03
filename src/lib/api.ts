@@ -90,3 +90,28 @@ export async function findPlayer(tournamentId: string, pseudo: string, animal: s
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 export const isToken = (s: string | undefined): s is string => !!s && UUID.test(s);
+
+export type Assignment =
+  | { placed: false }
+  | {
+      placed: true;
+      team: {
+        name: string;
+        hex: string;
+        members: { pseudo: string; level: number; table: number; game: string | null; second_game: string | null; me: boolean }[];
+      };
+      table: {
+        number: number;
+        game: string | null;
+        complexity: number | null;
+        second_game: string | null;
+        players: { pseudo: string; team: string; hex: string; me: boolean }[];
+      };
+    };
+
+/** Équipe et table du joueur ; null tant que la répartition n'est pas publiée. */
+export async function getMyAssignment(token: string): Promise<Assignment | null> {
+  const { data, error } = await supabase.rpc('get_my_assignment', { p_token: token });
+  if (error) throw new Error(error.message);
+  return (data as Assignment | null) ?? null;
+}

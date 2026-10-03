@@ -56,6 +56,7 @@ export default function AdminLayout() {
         <NavLink to="/admin" end>Tournoi</NavLink>
         <NavLink to="/admin/jeux">Catalogue des jeux</NavLink>
         <NavLink to="/admin/inscrits">Inscrits</NavLink>
+        <NavLink to="/admin/repartition">Répartition</NavLink>
         <div className="admin-nav-foot">
           <span className="small">{admin.email}</span>
           <button type="button" className="link-on-dark small" onClick={signOut}>Se déconnecter</button>

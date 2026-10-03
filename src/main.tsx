@@ -10,6 +10,7 @@ import AdminLayout from './pages/admin/AdminLayout';
 import AdminTournoi from './pages/admin/Tournoi';
 import AdminJeux from './pages/admin/Jeux';
 import AdminInscrits from './pages/admin/Inscrits';
+import AdminRepartition from './pages/admin/Repartition';
 import './styles.css';
 
 createRoot(document.getElementById('root')!).render(
@@ -25,6 +26,7 @@ createRoot(document.getElementById('root')!).render(
           <Route index element={<AdminTournoi />} />
           <Route path="jeux" element={<AdminJeux />} />
           <Route path="inscrits" element={<AdminInscrits />} />
+          <Route path="repartition" element={<AdminRepartition />} />
         </Route>
         <Route path="*" element={<Inscription />} />
       </Routes>
