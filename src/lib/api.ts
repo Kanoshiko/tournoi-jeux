@@ -20,7 +20,7 @@ export type MyPlayer = {
   tournament_id: string;
   pseudo: string;
   level: number;
-  code: string;
+  animal: string;
   tournament_status: Tournament['status'];
 };
 
@@ -59,7 +59,7 @@ export async function registerPlayer(tournamentId: string, pseudo: string, level
     .rpc('sign_up_player', { p_tournament_id: tournamentId, p_pseudo: pseudo, p_level: level })
     .single();
   if (error) throw new Error(error.message);
-  return data as { token: string; code: string };
+  return data as { token: string; animal: string };
 }
 
 export async function getMyPlayer(token: string): Promise<MyPlayer | null> {
@@ -78,11 +78,11 @@ export async function deleteMyPlayer(token: string) {
   if (error) throw new Error(error.message);
 }
 
-export async function findPlayer(tournamentId: string, pseudo: string, code: string): Promise<string | null> {
+export async function findPlayer(tournamentId: string, pseudo: string, animal: string): Promise<string | null> {
   const { data, error } = await supabase.rpc('find_player', {
     p_tournament_id: tournamentId,
     p_pseudo: pseudo,
-    p_code: code,
+    p_animal: animal,
   });
   if (error) throw new Error(error.message);
   return (data as string | null) ?? null;

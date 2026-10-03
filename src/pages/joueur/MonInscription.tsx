@@ -81,7 +81,7 @@ export default function MonInscription() {
         <Hero title="Inscription introuvable" />
         <div className="stack">
           <p className="card">Ce lien ne correspond à aucune inscription. Elle a peut-être été supprimée.</p>
-          <Link className="btn" to="/retrouver">Retrouver avec mon code</Link>
+          <Link className="btn" to="/retrouver">Retrouver avec mon animal</Link>
           <Link className="btn btn-ghost" to="/">S’inscrire</Link>
         </div>
       </main>
@@ -167,10 +167,10 @@ export default function MonInscription() {
 
       <div className="stack">
         <section className="card stack-sm" aria-labelledby="code-title">
-          <h2 id="code-title" className="h-small">Ton code personnel</h2>
-          <p className="code">{me.code}</p>
+          <h2 id="code-title" className="h-small">Ton animal secret</h2>
+          <p className="code">{me.animal}</p>
           <p className="muted small">
-            Garde ce lien : il te permettra de retrouver ton équipe et ta table le jour J. Sur un autre téléphone, ton pseudo et ce code suffisent.
+            Garde ce lien : il te permettra de retrouver ton équipe et ta table le jour J. Sur un autre téléphone, ton pseudo et ton animal suffisent.
           </p>
           <button type="button" className="btn btn-ghost" onClick={copyLink}>
             {copied ? 'Lien copié !' : 'Copier mon lien'}

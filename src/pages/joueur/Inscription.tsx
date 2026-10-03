@@ -91,7 +91,7 @@ export default function Inscription() {
           {date && <p>{date}</p>}
         </Hero>
         <div className="stack">
-          <p className="card">Les inscriptions sont terminées. Si tu es inscrit, retrouve ton équipe et ta table avec ton pseudo et ton code.</p>
+          <p className="card">Les inscriptions sont terminées. Si tu es inscrit, retrouve ton équipe et ta table avec ton pseudo et ton animal secret.</p>
           <Link className="btn" to="/retrouver">Retrouver mon inscription</Link>
         </div>
       </main>

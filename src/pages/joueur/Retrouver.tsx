@@ -7,7 +7,7 @@ import { rememberToken } from '../../lib/playerStore';
 export default function Retrouver() {
   const navigate = useNavigate();
   const [pseudo, setPseudo] = useState('');
-  const [code, setCode] = useState('');
+  const [animal, setAnimal] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -15,16 +15,16 @@ export default function Retrouver() {
     e.preventDefault();
     if (busy) return;
     setError(null);
-    if (!pseudo.trim() || !/^\d{4}$/.test(code.trim())) {
-      setError('Indique ton pseudo et ton code à 4 chiffres.');
+    if (!pseudo.trim() || !animal.trim()) {
+      setError('Indique ton pseudo et ton animal secret.');
       return;
     }
     setBusy(true);
     try {
       const t = await fetchCurrentTournament();
-      const token = t ? await findPlayer(t.id, pseudo, code) : null;
+      const token = t ? await findPlayer(t.id, pseudo, animal) : null;
       if (!token) {
-        setError('Aucune inscription ne correspond à ce pseudo et ce code.');
+        setError('Aucune inscription ne correspond à ce pseudo et cet animal.');
         setBusy(false);
         return;
       }
@@ -45,21 +45,22 @@ export default function Retrouver() {
           <input id="pseudo" className="input" autoComplete="nickname" maxLength={30} value={pseudo} onChange={(e) => setPseudo(e.target.value)} />
         </div>
         <div className="field">
-          <label htmlFor="code">Ton code à 4 chiffres</label>
+          <label htmlFor="animal">Ton animal secret</label>
           <input
-            id="code"
-            className="input input-code"
-            inputMode="numeric"
-            pattern="[0-9]*"
-            autoComplete="one-time-code"
-            maxLength={4}
-            value={code}
-            onChange={(e) => setCode(e.target.value.replace(/\D/g, ''))}
+            id="animal"
+            className="input"
+            autoComplete="off"
+            autoCapitalize="none"
+            spellCheck={false}
+            placeholder="ex. loutre"
+            maxLength={30}
+            value={animal}
+            onChange={(e) => setAnimal(e.target.value)}
           />
         </div>
         {error && <p className="alert" role="alert">{error}</p>}
         <button type="submit" className="btn" disabled={busy}>{busy ? 'Recherche…' : 'Retrouver'}</button>
-        <p className="muted small center">Code perdu ? Demande à un organisateur. · <Link to="/">S’inscrire</Link></p>
+        <p className="muted small center">Animal oublié ? Demande à un organisateur. · <Link to="/">S’inscrire</Link></p>
       </form>
     </main>
   );
