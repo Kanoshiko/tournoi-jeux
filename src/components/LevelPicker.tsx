@@ -31,7 +31,7 @@ export default function LevelPicker({ value, onChange, games }: Props) {
         step={1}
         value={value}
         onChange={(e) => onChange(Number(e.target.value))}
-        aria-valuetext={`${value} sur 10, ${tier.label}`}
+        aria-valuetext={`${value} sur 10, ${tier.signupLabel}`}
         className="level-range"
       />
       <div className="tiers" aria-hidden="true">
@@ -43,7 +43,7 @@ export default function LevelPicker({ value, onChange, games }: Props) {
             className={`tier ${t.key === tier.key ? 'tier-on' : ''}`}
             onClick={() => onChange(Math.round((t.min + t.max) / 2))}
           >
-            {t.label}
+            {t.signupLabel}
             <br />
             {t.min} – {t.max}
           </button>

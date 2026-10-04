@@ -5,6 +5,8 @@ export type TierKey = 'familial' | 'initie' | 'expert';
 export type Tier = {
   key: TierKey;
   label: string;
+  /** Libellé du curseur d'inscription, volontairement peu compétitif. */
+  signupLabel: string;
   min: number;
   max: number;
   description: string;
@@ -14,6 +16,7 @@ export const TIERS: readonly Tier[] = [
   {
     key: 'familial',
     label: 'Familial',
+    signupLabel: 'Petit',
     min: 1,
     max: 3,
     description: 'Des règles expliquées en quelques minutes et des parties courtes, pour jouer sans prise de tête.',
@@ -21,6 +24,7 @@ export const TIERS: readonly Tier[] = [
   {
     key: 'initie',
     label: 'Initié',
+    signupLabel: 'Moyen',
     min: 4,
     max: 6,
     description: 'Une dizaine de minutes de règles et des parties d’environ une heure, avec un peu de stratégie.',
@@ -28,6 +32,7 @@ export const TIERS: readonly Tier[] = [
   {
     key: 'expert',
     label: 'Expert',
+    signupLabel: 'Gros',
     min: 7,
     max: 10,
     description: 'Des règles longues ne te font pas peur : tu aimes les jeux riches et les parties de deux heures.',
