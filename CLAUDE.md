@@ -9,6 +9,24 @@ Interface et textes **en français**. Joueurs sur mobile (lien posté sur Discor
   Ne jamais vider ni réinitialiser des tables sans accord explicite. Faire les essais dans une
   transaction annulée (`begin; … rollback;`).
 
+## Spécification : `docs/regles.md` (à tenir à jour)
+
+`docs/regles.md` est la **source de vérité** des règles du tournoi ; le résumé ci-dessous n'en est
+qu'un aide-mémoire.
+
+- Toute décision qui change une règle ou un comportement visible (barème, formation des tables,
+  champs, limites, parcours joueur ou admin) est reportée dans `docs/regles.md` **dans le même
+  commit** que le code : modifier la section concernée, la liste « Décisions validées » si besoin,
+  et ajouter une ligne datée dans « Historique des mises à jour ». Mettre aussi à jour le résumé
+  ci-dessous s'il est touché.
+- Si une demande contredit `docs/regles.md`, le signaler et demander laquelle des deux fait foi
+  avant de coder.
+- Une fonctionnalité n'est **finie** que si elle est testée, en ligne, et la spécification à jour.
+- À chaque grande étape (fin d'une ligne de « Prochaines étapes »), relire `docs/regles.md` en
+  regard du code et signaler tout écart.
+- Le document partagé sur claude.ai (projet « Tournoi de jeu de société ») est une copie de
+  lecture : rappeler à l'utilisateur de le resynchroniser quand `docs/regles.md` change.
+
 ## Règles du tournoi (résumé)
 
 - Niveau des joueurs et complexité des jeux sur la même échelle 1–10 :
@@ -53,6 +71,7 @@ src/components/  Hero, LevelPicker, AssignmentView
 src/pages/joueur/  Inscription, MonInscription (/moi/:token), Jeux, Retrouver
 src/pages/admin/   AdminLayout (garde admin), Login, Tournoi, Jeux, Inscrits, Repartition
 supabase/migrations/  schéma, RLS et fonctions — appliqués dans l'ordre
+docs/regles.md   spécification des règles du tournoi (source de vérité)
 ```
 
 ## Sécurité (à préserver)
@@ -107,4 +126,5 @@ enregistrer, publier), vue joueur équipe + table.
 4. Statut « terminé » et annonce de l'équipe gagnante.
 5. E-mail de connexion en français (modèle dans Supabase → Authentication → Email templates).
 
-Document de règles et maquettes : voir le projet claude.ai « Tournoi de jeu de société ».
+Règles : `docs/regles.md`. Maquettes et guide organisateur : projet claude.ai
+« Tournoi de jeu de société ».

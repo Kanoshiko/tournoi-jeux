@@ -5,7 +5,7 @@ Application d'inscription et de gestion du tournoi par équipes du club.
 - Les joueurs s'inscrivent sur mobile (pseudo + niveau 1–10) et voient leur équipe, leur table et le classement en direct.
 - Les admins gèrent le catalogue de jeux, génèrent la répartition, l'ajustent, la publient et saisissent les résultats.
 
-Les règles de composition (tables homogènes, équipes mixtes, barème normalisé) sont décrites dans le document de règles du projet.
+Les règles de composition (tables homogènes, équipes mixtes, barème normalisé) sont décrites dans [`docs/regles.md`](docs/regles.md), source de vérité tenue à jour avec le code.
 
 ## Technologies
 
